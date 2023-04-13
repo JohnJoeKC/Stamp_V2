@@ -89,22 +89,24 @@
       </main>
             <script src="js/bootstrap.bundle.min.js"></script>
   
-          <script>
-            require.config({
+            <script>
+              require.config({
                 paths: {
-                    'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.1/min/vs'
+                  'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.1/min/vs'
                 }
-            });
-
-            let editor;
-            require(['vs/editor/editor.main'], function () {
+              });
+            
+              let editor;
+              require(['vs/editor/editor.main'], function () {
                 editor = monaco.editor.create(document.getElementById('monaco-editor-container'), {
                   value: [
-                      'print("Hello, world!")',
+                    'print("Hello, world!")',
                   ].join('\n'),
                   language: 'python'
                 });
-            });
+            
+                editor.updateOptions({ theme: 'vs-dark' }); // Add this line
+              });
 
             // Function to execute the code
             async function executeCode() {
