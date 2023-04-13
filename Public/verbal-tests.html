@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Features & Benefits - My Business</title>
+    <title>Coding Tests - Stamp</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
@@ -56,16 +56,16 @@
           </section>
 
           <section class="container">
-              <h4>Code here</h4> <!-- 3. Add "Code here" text -->
-              <div id="monaco-editor-container" style="border: 1px solid black; padding: 10px; height: 400px;"></div> <!-- 5. Add border on all sides -->
+              <h4>Code here</h4>
+              <div id="monaco-editor-container" style="border: 1px solid black; padding: 10px; height: 400px; overflow: hidden;"></div>
               <button id="run-code" class="btn btn-primary mt-3">Run Code</button>
-              <h4>Output</h4> <!-- 2. Move "Output" text outside the output box -->
+              <h4>Output</h4>
               <div id="output-container" class="mt-3" style="border: 1px solid black; padding: 10px; height: 100px;">
                   <pre id="output"></pre>
-                  <button id="submit-answer" class="btn btn-primary mt-3" style="display: none;">Submit Answer</button> <!-- 1. & 4. Move the submit button and hide it initially -->
               </div>
+              <button id="submit-answer" class="btn btn-primary mt-3" style="display: none;">Submit Answer</button> <!-- Moved the submit button outside the output box -->
           </section>
-          
+  
           <script src="js/bootstrap.bundle.min.js"></script>
   
           <script>
@@ -116,8 +116,8 @@
                     });
 
                     const outputElement = document.getElementById('output');
-                document.getElementById("output-container").style.display = "block";
-                document.getElementById("submit-answer").style.display = "block"; // 4. Make the submit button visible after pressing the run code button
+                    document.getElementById("output-container").style.display = "block";
+                    document.getElementById("submit-answer").style.display = "block";
             }
 
             // Add click event listener to the "Run Code" button
