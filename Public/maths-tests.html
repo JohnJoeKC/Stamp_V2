@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Tests - My Business</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        var correctAnswersCount = 0;
+        var totalAnswersCount = 0;
+
+        function checkAnswer(questionNumber, correctAnswer, userAnswer, buttonElement) {
+            var questionDiv = document.getElementById("question" + questionNumber);
+            var buttons = questionDiv.getElementsByTagName("button");
+
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+                if (parseFloat(buttons[i].dataset.answer) === parseFloat(correctAnswer)) {
+                    buttons[i].classList.add("correct");
+                } else {
+                    buttons[i].classList.add("incorrect");
+                }
+            }
+
+            if (parseFloat(userAnswer) === parseFloat(correctAnswer)) {
+                correctAnswersCount++;
+            }
+            totalAnswersCount++;
+            updateCounter();
+        }
+
+        function updateCounter() {
+            var counter = document.getElementById("counter");
+            counter.innerHTML = correctAnswersCount + "/" + totalAnswersCount + " answers correct";
+        }
+        window.onload = function() {
+            document.getElementById("submitBtn").addEventListener("click", function() {
+                const totalQuestions = 3; // Update this to match the number of questions in your test
+                const correctAnswers = document.getElementById("counter").textContent;
+
+                const csvContent = "data:text/csv;charset=utf-8,Total Questions,Correct Answers\n" +
+                    totalQuestions + "," + correctAnswers;
+
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "pricing_test_results.csv");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Header and Navigation -->
+    <!-- ... -->
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container">
+            <a class="navbar-brand" href="index.html">My Business</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="features.html">Features & Benefits</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="testimonials.html">Testimonials & Success Stories</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="pricing.html">Pricing & Packages</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="demo.html">Try Our Tests (Demo)</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      
+      <main>
+        <!-- Maths Tests -->
+        <section class="container">
+            <h2 class="section-title">Pricing Tests</h2>
+
+            <!-- Counter -->
+            <div id="counter" class="counter">0/0 answers correct</div>
+
+            <!-- Question 1 -->
+            <div class="question" id="question1">
+                <p>1. A packaged food item has a production cost of $2.00 per unit. If the company wants to achieve a 40% profit margin on each unit sold, what should be the selling price?</p>
+                <button data-answer="2.40" onclick="checkAnswer(1, '3.20', 2.40, this)">$2.40</button>
+                <button data-answer="2.80" onclick="checkAnswer(1, '3.20', 2.80, this)">$2.80</button>
+                <button data-answer="3.00" onclick="checkAnswer(1, '3.20', 3.00, this)">$3.00</button>
+                <button data-answer="3.20" onclick="checkAnswer(1, '3.20', 3.20, this)">$3.20</button>
+
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question" id="question2">
+                <p>2. A customer buys a bundle of 5 packaged food items, each priced at $3.50. If the company offers a 10% discount on the bundle, how much will the customer pay??</p>
+                <button data-answer="13.50" onclick="checkAnswer(2, 15.75, 13.50, this)">$13.50</button>
+                <button data-answer="14.00" onclick="checkAnswer(2, 15.75, 14.00, this)">$14.00</button>
+                <button data-answer="15.75" onclick="checkAnswer(2, 15.75, 15.75, this)">$15.75</button>
+                <button data-answer="17.50" onclick="checkAnswer(2, 15.75, 17.50, this)">$17.50</button>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question" id="question3">
+                <p>3. A packaged food company is considering two pricing strategies for a new product. Strategy A is to set the price at $5.00 per unit and expect to sell 2000 units. Strategy B is to set the price at $4.50 per unit and expect to sell 2500 units. Which strategy will generate higher revenue?</p>
+                <button data-answer="1" onclick="checkAnswer(3, 2, 1, this)">Strategy A</button>
+                <button data-answer="2" onclick="checkAnswer(3, 2, 2, this)">Strategy B</button>
+                <button data-answer="3" onclick="checkAnswer(3, 2, 3, this)">Both strategies generate the same revenue</button>
+                <button data-answer="4" onclick="checkAnswer(3, 2, 4, this)">Unable to determine without more information</button>
+            </div>
+        
+            <!-- Submit button -->
+            <button id="submitBtn" class="btn btn-primary submit-btn">Submit</button>
+
+        
+    </section>
+    </main>
+
+    <!-- Footer -->
+    <!-- ... -->
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
