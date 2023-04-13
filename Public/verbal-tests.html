@@ -55,8 +55,8 @@
             <p>Using Python write code to calculate the factorial of a number, and produce a sentence "the factorial of X is Y. In this instance X=5.".</p>
           </section>
 
-        <section class="container">
-            <div id="monaco-editor-container" style="width: 800px; height: 600px;"></div>
+          <section class="container">
+            <div id="monaco-editor-container" style="width: 800px; height: 400px;"></div>
             <button id="run-code" class="btn btn-primary mt-3">Run Code</button>
             <pre id="output" class="mt-3"></pre>
         </section>
@@ -83,26 +83,36 @@
 
             // Function to execute the code
             async function executeCode() {
-    const code = editor.getValue();
-    console.log('Code:', code); // Add this line to log the code
+                const code = editor.getValue();
+                console.log('Code:', code);
 
-    const response = await fetch('http://localhost:3000/execute', { // Change the address here
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            code: code,
-            language: 'python'
-        })
-    });
-    const data = await response.json();
-    console.log('Response:', data); // Add this line to log the response
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        code: code,
+                        language: 'python',
+                    }),
+                };
 
-    const outputElement = document.getElementById('output');
-    outputElement.textContent = data.output;
-}
+                fetch('https://stamp-v2.herokuapp.com/execute', requestOptions)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.error) {
+                            console.error('Response:', data);
+                            outputElement.textContent = 'An error occurred while executing the code.';
+                        } else {
+                            outputElement.textContent = data.output;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
 
+                const outputElement = document.getElementById('output');
+            }
 
             // Add click event listener to the "Run Code" button
             const runCodeButton = document.getElementById('run-code');
