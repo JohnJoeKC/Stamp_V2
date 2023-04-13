@@ -3,8 +3,12 @@ const path = require('path');
 const app = express();
 const cors = require('cors');
 const PythonShell = require('python-shell').PythonShell;
+const corsOptions = {
+  origin: 'https://stamp-v2.herokuapp.com',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, 'Public')));
 
