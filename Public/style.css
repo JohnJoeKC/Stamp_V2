@@ -112,6 +112,10 @@ opacity: 0.65;
     margin-top: 30px;
   }
   
+#monaco-editor-container {
+    border: 1px solid black;
+}
+
   /* Add custom styles for different sections and elements as needed */
   
   
