@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
-const { PythonShell } = require('python-shell');
+const { PythonShell } = require('python-shell'); // Make sure to add this at the beginning of the server.js file.
 const corsOptions = {
   origin: 'https://stamp-v2.herokuapp.com',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -18,9 +18,7 @@ app.post('/execute', (req, res) => {
   const { code, language } = req.body;
 
   if (language === 'python') {
-    const pythonShell = new PythonShell({ mode: 'text' });
-
-    pythonShell.execString(code, null, (err, output) => {
+    PythonShell.runString(code, null, null, (err, output) => {
       if (err) {
         console.error('Error:', err.message);
         console.error('Traceback:', err.traceback);
@@ -30,8 +28,6 @@ app.post('/execute', (req, res) => {
         res.json({ output: output.join('\n') });
       }
     });
-  } else {
-    res.status(400).json({ error: 'Unsupported language.' });
   }
 });
 
