@@ -22,7 +22,9 @@ app.post('/execute', (req, res) => {
   
     pythonShell.execString(code, null, (err, output) => {
       if (err) {
-        console.error(err);
+        console.error('Error:', err.message);
+        console.error('Traceback:', err.traceback);
+
         res.status(500).json({ error: 'An error occurred while executing the code.' });
       } else {
         res.json({ output: output.join('\n') });
