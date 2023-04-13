@@ -58,10 +58,10 @@
           <section class="container">
             <div id="monaco-editor-container" style="width: 800px; height: 400px;"></div>
             <button id="run-code" class="btn btn-primary mt-3">Run Code</button>
-            <div class="mt-3">
+            <div id="output-container" class="mt-3" style="border: 1px solid black; padding: 10px; display: none;">
                 <h4>Output</h4>
                 <pre id="output"></pre>
-                <button id="submit-output" class="btn btn-primary mt-3">Submit Output</button>
+                <button id="submit-answer" class="btn btn-primary mt-3">Submit Answer</button>
             </div>
         </section>
         
@@ -116,6 +116,7 @@
                     });
 
                 const outputElement = document.getElementById('output');
+                document.getElementById("output-container").style.display = "block";
             }
 
             // Add click event listener to the "Run Code" button
@@ -135,9 +136,9 @@
                 document.body.removeChild(link);
             }
 
-            const submitOutputButton = document.getElementById("submit-output");
+            const submitOutputButton = document.getElementById("submit-answer");
             submitOutputButton.addEventListener("click", exportCSV);
-        </script>
+       </script>
 
     </body>
 
