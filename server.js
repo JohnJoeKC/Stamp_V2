@@ -20,18 +20,28 @@ app.post('/execute', (req, res) => {
   const { code, language } = req.body;
 
   if (language === 'python') {
-    fs.writeFileSync('test.py', code); // Add this line
+    fs.writeFileSync('test.py', code);
 
-    const pythonProcess = spawn('python', ['test.py']); // Add this line
+    const pythonProcess = spawn('python', ['test.py']);
+    let outputData = '';
+    let errorData = '';
 
     pythonProcess.stdout.on('data', (data) => {
-      console.log('Python script executed');
-      res.json({ output: data.toString() });
+      outputData += data.toString();
     });
 
     pythonProcess.stderr.on('data', (data) => {
-      console.log('Python script error:', data.toString());
-      res.json({ error: data.toString() });
+      errorData += data.toString();
+    });
+
+    pythonProcess.on('close', (code) => {
+      if (errorData) {
+        console.log('Python script error:', errorData);
+        res.json({ error: errorData });
+      } else {
+        console.log('Python script executed');
+        res.json({ output: outputData });
+      }
     });
 
     pythonProcess.on('error', (error) => {
