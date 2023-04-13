@@ -10,6 +10,9 @@ app.use(cors({
   methods: ['POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type']
 }));
+
+app.use(express.static(path.join(__dirname, 'Public')));
+
 app.use(express.json());
 
 app.post('/execute', async (req, res) => {
