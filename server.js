@@ -4,11 +4,7 @@ const app = express();
 const cors = require('cors');
 const PythonShell = require('python-shell').PythonShell;
 
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ? 'https://stamp-v2.herokuapp.com' : 'http://127.0.0.1:5500',
-  methods: ['POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
-}));
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'Public')));
 
