@@ -19,7 +19,7 @@ app.post('/execute', (req, res) => {
 
   if (language === 'python') {
     const pythonShell = new PythonShell({ mode: 'text' });
-  
+
     pythonShell.execString(code, null, (err, output) => {
       if (err) {
         console.error('Error:', err.message);
@@ -32,7 +32,7 @@ app.post('/execute', (req, res) => {
     });
   } else {
     res.status(400).json({ error: 'Unsupported language.' });
-  }  
+  }
 });
 
 app.get('/', (req, res) => {
