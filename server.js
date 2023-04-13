@@ -2,7 +2,8 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
-const { PythonShell } = require('python-shell'); // Make sure to add this at the beginning of the server.js file.
+const fs = require('fs'); // Add this line
+const { spawn } = require('child_process'); // Add this line
 const corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -15,18 +16,26 @@ app.use(express.static(path.join(__dirname, 'Public')));
 app.use(express.json());
 
 app.post('/execute', (req, res) => {
+  console.log('Received POST request');
   const { code, language } = req.body;
 
   if (language === 'python') {
-    PythonShell.runString(code, null, null, (err, output) => {
-      if (err) {
-        console.error('Error:', err.message);
-        console.error('Traceback:', err.traceback);
+    fs.writeFileSync('test.py', code); // Add this line
 
-        res.status(500).json({ error: 'An error occurred while executing the code.' });
-      } else {
-        res.json({ output: output.join('\n') });
-      }
+    const pythonProcess = spawn('python', ['test.py']); // Add this line
+
+    pythonProcess.stdout.on('data', (data) => {
+      console.log('Python script executed');
+      res.json({ output: data.toString() });
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+      console.log('Python script error:', data.toString());
+      res.json({ error: data.toString() });
+    });
+
+    pythonProcess.on('error', (error) => {
+      res.json({ error: error.message });
     });
   }
 });
@@ -45,3 +54,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
