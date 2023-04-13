@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 const { PythonShell } = require('python-shell'); // Make sure to add this at the beginning of the server.js file.
 const corsOptions = {
-  origin: 'https://stamp-v2.herokuapp.com',
+  origin: '*',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
