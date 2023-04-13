@@ -1,12 +1,11 @@
 const express = require('express');
-const Docker = require('dockerode');
 const path = require('path');
 const app = express();
 const cors = require('cors');
-const docker = new Docker({ host: 'localhost', port: 2375 });
+const PythonShell = require('python-shell').PythonShell;
 
 app.use(cors({
-  origin: 'http://127.0.0.1:5500',
+  origin: process.env.NODE_ENV === 'production' ? 'https://stamp-v2.herokuapp.com' : 'http://127.0.0.1:5500',
   methods: ['POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type']
 }));
@@ -15,37 +14,28 @@ app.use(express.static(path.join(__dirname, 'Public')));
 
 app.use(express.json());
 
-app.post('/execute', async (req, res) => {
-    try {
-      // Extract code and language from the request (assumes JSON format)
-      const { code, language } = req.body;
-  
-      if (language !== 'python') {
-        res.status(400).json({ error: 'Unsupported language' });
-        return;
+app.post('/execute', (req, res) => {
+  const { code, language } = req.body;
+
+  if (language === 'python') {
+    const pythonShell = new PythonShell('python-script.py', { mode: 'text' });
+    pythonShell.send(code);
+
+    pythonShell.on('message', (output) => {
+      res.json({ output: output });
+    });
+
+    pythonShell.end((err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'An error occurred while executing the code.' });
       }
-  
-      // Create an isolated Docker container to run the code
-      const container = await docker.createContainer({
-        Image: 'python:3.8', // Use the official Python 3.8 image
-        Cmd: ['python', '-c', code], // Run the provided code
-        Tty: false,
-        AttachStdout: true,
-        AttachStderr: true,
-      });
-  
-      // Start the container
-      await container.start();
-  
-      // Attach a stream to collect the output
-      const stream = await container.attach({ stdout: true, stderr: true, stream: true });
-      let output = '';
-  
-      // Listen for data events and collect the output
-      stream.on('data', (chunk) => {
-        output += chunk.toString('utf-8');
-      });
-  
+    });
+  } else {
+    res.status(400).json({ error: 'Unsupported language.' });
+  }
+});
+
       // Wait for the container to finish executing the code
       await container.wait();
   
