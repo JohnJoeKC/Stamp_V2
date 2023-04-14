@@ -175,7 +175,9 @@
             }
 
             submitOutputButton.addEventListener("click", showExplanationInput);
-            document.getElementById('download-csv').href = 'https://raw.githubusercontent.com/JohnJoeKC/Stamp_V2/main/Sample_set_1.csv';
+            const downloadCSVLink = document.getElementById('download-csv');
+            downloadCSVLink.href = 'https://raw.githubusercontent.com/JohnJoeKC/Stamp_V2/main/Datasets/Sample_set_1.csv';
+            downloadCSVLink.setAttribute('download', 'Sample_set_1.csv');
     </script>
 
     </body>
