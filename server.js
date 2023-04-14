@@ -12,7 +12,7 @@ const corsOptions = {
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'Public')));
-
+app.use('/Images', express.static('Images')); // Serve the 'Images' folder as static content
 app.use(express.json());
 
 app.post('/execute', (req, res) => {
