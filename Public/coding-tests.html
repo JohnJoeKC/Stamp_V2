@@ -74,6 +74,7 @@
                 <h2 class="section-title">Coding Test</h2>
                 <p>Please read the below task and use the IDE to code the soltution. You have 30 minutes to complete the task.</p>
                 <p>Using Python, write code to calculate the factorial of a number, and produce a sentence "the factorial of X is Y. In this instance X=5.".</p>
+                <a id="download-csv" href="#" download="Sample_set_1.csv">Download CSV Dataset</a>
                 <h4>Output</h4>
                 <div id="output-container" class="mt-3" style="border: 1px solid black; padding: 10px; height: 100px;">
                     <pre id="output"></pre>
@@ -174,7 +175,8 @@
             }
 
             submitOutputButton.addEventListener("click", showExplanationInput);
-       </script>
+            document.getElementById('download-csv').href = '\Stamp_v2\Datasets\Sample_set_1.csv';
+    </script>
 
     </body>
 
