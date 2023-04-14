@@ -79,6 +79,12 @@
                     <pre id="output"></pre>
                 </div>
                 <button id="submit-answer" class="btn btn-primary mt-3" style="display: none;">Submit Answer</button>
+                <div id="explanation-container" style="display: none;">
+                  <h4>Please write a few sentences about your answer</h4>
+                  <p>(This can be used by the hiring manager to understand how you answered the case)</p>
+                  <textarea id="explanation" rows="3" class="form-control mb-3" style="border: 1px solid black;"></textarea>
+                  <button id="submit-explanation" class="btn btn-primary">Submit Explanation</button>
+                </div>
             </div>
             <div class="right-column">
                 <h4 class="section-title">Code here</h4>
@@ -162,6 +168,12 @@
 
             const submitOutputButton = document.getElementById("submit-answer");
             submitOutputButton.addEventListener("click", exportCSV);
+            
+            function showExplanationInput() {
+              document.getElementById("explanation-container").style.display = "block";
+            }
+
+            submitOutputButton.addEventListener("click", showExplanationInput);
        </script>
 
     </body>

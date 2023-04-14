@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Service Test - Stamp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .main-content .left-column {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .main-content .right-column {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .main-content .right-column .section-title {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">Stamp</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="features.html">Features & Benefits</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="testimonials.html">Testimonials & Success Stories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="pricing.html">Pricing & Packages</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="demo.html">Try Our Tests (Demo)</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container main-content">
+            <div class="left-column">
+                <h2 class="section-title">Customer Service Test</h2>
+                <p>Interact with the customer through the chat interface on the right.</p>
+            </div>
+            <div class="right-column">
+                <h4 class="section-title">Chat Interface</h4>
+                <div id="chat-container" style="border: 1px solid black; padding: 10px; height: 400px; overflow-y: scroll;">
+                    <!-- Chat messages will be displayed here -->
+                </div>
+                <div class="input-group mt-3">
+                    <input type="text" class="form-control" id="chat-input" placeholder="Type your message...">
+                    <button id="send-message" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const chatContainer = document.getElementById("chat-container");
+        const chatInput = document.getElementById("chat-input");
+        const sendMessageButton = document.getElementById("send-message");
+
+        function appendMessage(message, sender = "user") {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add(sender === "user" ? "text-end" : "text-start");
+            messageElement.textContent = message;
+            chatContainer.appendChild(messageElement);
+        }
+
+        sendMessageButton.addEventListener("click", () => {
+            const message = chatInput.value.trim();
+            if (message) {
+                appendMessage(message, "user");
+                chatInput.value = "";
+                // You can add a response from the customer service agent here, for example:
+                // appendMessage("Thank you for your message!", "agent");
+            }
+        });
+
+        chatInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendMessageButton.click();
+            }
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+        

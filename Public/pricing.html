@@ -7,6 +7,27 @@
     <title>Pricing & Packages - Stamp</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .section-title {
+            background-color: rgb(242, 241, 241);
+            margin: 2rem 0;
+            padding: 2rem 0;
+        }
+        .pricing-card ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .pricing-card {
+            background-color: rgb(242, 241, 241);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 2rem;
+        }
+        .button-container {
+            display: flex;
+            align-items: end;
+        }
+    </style>
 </head>
 
 <body>
@@ -46,54 +67,60 @@
     <main>
         <!-- Pricing -->
         <section class="container">
-            <h2 class="section-title">Pricing & Packages</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="pricing-card">
-                        <h3>Basic</h3>
-                        <p class="price">$49/month</p>
-                        <ul>
-                            <li>Up to 100 assessments</li>
-                            <li>Email support</li>
-                            <li>Basic analytics</li>
-                        </ul>
-                        <a href="#" class="call-to-action">Sign Up</a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="pricing-card">
-                        <h3>Pro</h3>
-                        <p class="price">$99/month</p>
-                        <ul>
-                            <li>Up to 500 assessments</li>
-                            <li>Priority email support</li>
-                            <li>Advanced analytics</li>
-                            <li>Customizable tests</li>
-                        </ul>
-                        <a href="#" class="call-to-action">Sign Up</a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="pricing-card">
-                        <h3>Enterprise</h3>
-                        <p class="price">Custom Pricing</p>
-                        <ul>
-                            <li>Unlimited assessments</li>
-                            <li>Dedicated support</li>
-                            <li>Custom integrations</li>
-                            <li>White-labeling</li>
-                        </ul>
-                        <a href="#" class="call-to-action">Contact Us</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+          <h2 class="section-title">Pricing & Packages</h2>
+          <div class="row">
+              <div class="col-md-4">
+                  <div class="pricing-card">
+                      <h3>Basic</h3>
+                      <h5 class="price">$49/month</h5>
+                      <ul>
+                          <li>Up to 100 assessments</li>
+                          <li>Email support</li>
+                          <li>Basic analytics</li>
+                      </ul>
+                      <div class="button-container">
+                          <a href="#" class="call-to-action">Sign Up</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="pricing-card">
+                      <h3>Pro</h3>
+                      <h5 class="price">$99/month</h5>
+                      <ul>
+                          <li>Up to 500 assessments</li>
+                          <li>Priority email support</li>
+                          <li>Advanced analytics</li>
+                          <li>Customizable tests</li>
+                      </ul>
+                      <div class="button-container">
+                          <a href="#" class="call-to-action">Sign Up</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="pricing-card">
+                      <h3>Enterprise</h3>
+                      <h5 class="price">Custom Pricing</h5>
+                      <ul>
+                          <li>Unlimited assessments</li>
+                          <li>Dedicated support</li>
+                          <li>Custom integrations</li>
+                          <li>White-labeling</li>
+                      </ul>
+                      <div class="button-container">
+                          <a href="#" class="call-to-action">Contact Us</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+  </main>
 
-    <!-- Footer -->
-    <!-- ... -->
+  <!-- Footer -->
+  <!-- ... -->
 
-    <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

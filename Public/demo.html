@@ -7,11 +7,58 @@
     <title>Try Our Tests - Demo - Stamp</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+      .filter-container {
+            margin-bottom: 1rem;
+            width: 50%;
+      }
+
+      .filter {
+          width: 100%;
+      }
+
+      .test-box {
+          background-color: rgb(253, 253, 253);
+          border: 3px solid rgb(6, 6, 6);
+          border-radius: 10px;
+          cursor: pointer;
+          height: 100px;
+          margin-bottom: 1rem;
+          padding: 1rem;
+          text-align: center;
+      }
+
+      .section-title {
+          background-color: rgb(242, 241, 241);
+          margin: 2rem 0;
+          padding: 2rem 0;
+      }
+  </style>
     <script>
-        function redirectToTestPage(testName) {
-            window.location.href = testName + "-tests.html";
-        }
-    </script>
+      function redirectToTestPage(testName) {
+          window.location.href = testName + "-tests.html";
+      }
+
+      function filterBoxes() {
+          const selectedCategories = Array.from(document.getElementById("category-filter").selectedOptions).map(option => option.value);
+          const boxes = document.querySelectorAll(".test-box");
+
+          boxes.forEach(box => {
+              const boxCategory = box.getAttribute("data-category");
+
+              if (selectedCategories.includes(boxCategory)) {
+                  box.style.display = "block";
+              } else {
+                  box.style.display = "none";
+              }
+          });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+          const categoryFilter = document.getElementById("category-filter");
+          categoryFilter.addEventListener("change", filterBoxes);
+      });
+  </script>
 </head>
 
 <body>
@@ -48,60 +95,83 @@
         </nav>
       </header>
 
-    <main>
-             <!-- Demo Introduction -->
-             <section class="container">
-                <h2 class="section-title">Try Our Tests - Demo</h2>
-    
-                <!-- Interactive Boxes -->
-                <section class="container test-boxes">
-                    <div class="row">
-                        <div class="col-md-4" onclick="redirectToTestPage('maths')">
-                            <div class="test-box">
-                                <h3>Pricing Tests</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-4" onclick="redirectToTestPage('logic')">
-                            <div class="test-box">
-                                <h3>Logic Tests</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-4" onclick="redirectToTestPage('verbal')">
-                            <div class="test-box">
-                                <h3>Coding Tests</h3>
-                            </div>
+      <main>
+        <!-- Demo Introduction -->
+        <section class="container">
+          <h2 class="section-title">Try Our Tests - Demo</h2>
+
+          <!-- Filter -->
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="filter-container">
+                      <select class="form-select filter" id="category-filter" multiple>
+                          <option value="Category1">Category1</option>
+                          <option value="Category2">Category2</option>
+                          <option value="Category3">Category3</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="col-md-6"></div>
+          </div>
+
+          <!-- Interactive Boxes -->
+            <section class="container test-boxes">
+                <div class="row">
+                    <!-- Add 'data-category' attributes to the test boxes for filtering -->
+                    <div class="col-md-4" onclick="redirectToTestPage('maths')">
+                        <div class="test-box" data-category="Category1">
+                            <h3>Pricing Tests</h3>
                         </div>
                     </div>
-                </section>
-    
-                <p>Experience our AI-powered assessment platform with a free demo. Fill out the form below to access a sample test and see how our platform can revolutionize your hiring process.</p>
-            </section>
+                    <div class="col-md-4" onclick="redirectToTestPage('logic')">
+                        <div class="test-box" data-category="Category1">
+                            <h3>Logic Tests</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4" onclick="redirectToTestPage('verbal')">
+                        <div class="test-box" data-category="Category1">
+                            <h3>Coding Tests</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="test-box" data-category="Category2">
+                            <h3>Statistics Tests</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="test-box" data-category="Category2">
+                          <h3>Language Tests</h3>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="test-box" data-category="Category2">
+                          <h3>Digital Marketing Tests</h3>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="test-box" data-category="Category3">
+                          <h3>Data Visualization Tests</h3>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="test-box" data-category="Category3">
+                          <h3>Finance Tests</h3>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="test-box" data-category="Category3">
+                          <h3>Cognitive Tests</h3>
+                      </div>
+                  </div>
+              </div>
+          </section>
+      </section>
+  </main>
 
+  <!-- Footer -->
+  <!-- ... -->
 
-        <!-- Demo Form -->
-        <section class="container">
-            <form>
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="John Doe">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="john@example.com">
-                </div>
-                <div class="form-group">
-                    <label for="company">Company</label>
-                    <input type="text" class="form-control" id="company" placeholder="XYZ Company">
-                </div>
-                <button type="submit" class="call-to-action">Access Demo Test</button>
-            </form>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <!-- ... -->
-
-    <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
