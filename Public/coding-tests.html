@@ -74,7 +74,9 @@
                 <h2 class="section-title">Coding Test</h2>
                 <p>Please read the below task and use the IDE to code the soltution. You have 30 minutes to complete the task.</p>
                 <p>Using Python, write code to calculate the factorial of a number, and produce a sentence "the factorial of X is Y. In this instance X=5.".</p>
-                <a id="download-csv" href="#" download="Sample_set_1.csv">Download CSV Dataset</a>
+                <button id="download-csv" class="btn btn-primary">Download CSV Dataset</button>
+                <p>Paste the CSV data below:</p>
+                <textarea id="csv-data" rows="10" class="form-control mb-3" style="border: 1px solid black;"></textarea>
                 <h4>Output</h4>
                 <div id="output-container" class="mt-3" style="border: 1px solid black; padding: 10px; height: 100px;">
                     <pre id="output"></pre>
@@ -116,10 +118,13 @@
               });
 
             // Function to execute the code
-            async function executeCode() {
+              async function executeCode() {
                 const code = editor.getValue();
                 console.log('Code:', code);
-
+                
+                // Get the CSV data from the textarea
+                const csvData = document.getElementById("csv-data").value;
+                
                 const requestOptions = {
                     method: 'POST',
                     headers: {
@@ -128,6 +133,7 @@
                     body: JSON.stringify({
                         code: code,
                         language: 'python',
+                        input: csvData,
                     }),
                 };
 
@@ -175,9 +181,20 @@
             }
 
             submitOutputButton.addEventListener("click", showExplanationInput);
-            const downloadCSVLink = document.getElementById('download-csv');
-            downloadCSVLink.href = 'https://raw.githubusercontent.com/JohnJoeKC/Stamp_V2/main/Datasets/Sample_set_1.csv';
-            downloadCSVLink.setAttribute('download', 'Sample_set_1.csv');
+            document.getElementById("download-csv").addEventListener("click", function () {
+              fetch("https://raw.githubusercontent.com/JohnJoeKC/Stamp_V2/main/Datasets/Sample_set_1.csv")
+                .then((response) => response.blob())
+                .then((blob) => {
+                  const url = window.URL.createObjectURL(blob);
+                  const link = document.createElement("a");
+                  link.href = url;
+                  link.setAttribute("download", "Sample_set_1.csv");
+                  document.body.appendChild(link);
+                  link.click();
+                  link.parentNode.removeChild(link);
+                });
+            });
+
     </script>
 
     </body>
