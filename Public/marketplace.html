@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
+    <style>
+        .course-box {
+            background-color: #f2f1f1;
+            border: 1px solid lightgray;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .course-box .image-container {
+            width: 100%;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .course-box img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: contain;
+        }
+
+        .course-box h4 {
+            text-align: center;
+            margin-top: 15px;
+            height: 60px;
+        }
+
+        .course-box ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        .price {
+            margin-top: auto;
+        }
+
+        .course-box .course-content {
+            flex: 1;
+        }
+
+        .course-box p {
+            height: 60px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .course-box ul {
+            height: 90px;
+            overflow: hidden;
+        }
+
+        .section-title {
+          background-color: rgb(242, 241, 241);
+          margin: 2rem 0;
+          padding: 2rem 0;
+      }
+    </style>
+</head>
+
+<body>
+    <!-- Header and Navigation -->
+    <!-- ... -->
+    
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container">
+            <a class="navbar-brand" href="index.html">Stamp</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="features.html">Features & Benefits</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="testimonials.html">Testimonials & Success Stories</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="pricing.html">Pricing & Packages</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="demo.html">Try Our Tests (Demo)</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+    <main>
+        <section class="container">
+            <h2 class="section-title">Find the right course for you</h2>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="category" class="form-label">Categoria:</label>
+                    <select id="category" multiple="multiple" class="form-control">
+                        <option value="all">All</option>
+                        <option value="tech">Tech</option>
+                        <option value="finance">Finance</option>
+                        <option value="marketing">Marketing</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="type" class="form-label">Tipo:</label>
+                    <select id="type" multiple="multiple" class="form-control">
+                        <option value="all">All</option>
+                        <option value="presencial">Presencial</option>
+                        <option value="online">Online</option>
+                        <option value="hybrid">Hybrid</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="support" class="form-label">Nível de suporte:</label>
+                    <select id="support" multiple="multiple" class="form-control">
+                        <option value="all">All</option>
+                        <option value="auto-aprendizagem">Auto-aprendizagem</option>
+                        <option value="aulas-estruturadas">Aulas estruturadas</option>
+                        <option value="coach-mentor">Coach / Mentor</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <!-- Course Box 1 -->
+                <div class="col-lg-3">
+                    <div class="course-box" data-category="finance" data-type="online" data-support="coach-mentor">
+                        <img src="/Images/coursera.jpg" alt="Coursera">
+                        <div class="course-content">
+                            <h4>Course Title 1</h4>
+                            <p>Course description goes here for course 1...</p>
+                            <ul>
+                                <li>Finance</li>
+                                <li>Online</li>
+                                <li>Coach / Mentor</li>
+                            </ul>
+                        </div>
+                        <div class="price">Precio: $X</div>
+                    </div>
+                </div>
+    
+                <!-- Course Box 2 -->
+                <div class="col-lg-3">
+                    <div class="course-box" data-category="tech" data-type="presencial" data-support="aulas-estruturadas">
+                        <img src="/Images/datascienceacademy.png" alt="Data Science Academy">
+                        <div class="course-content">
+                            <h4>Formação Cientista de Dados 3.0</h4>
+                            <p>Course description goes here for course 2...</p>
+                            <ul>
+                                <li>Tech</li>
+                                <li>Presencial</li>
+                                <li>Aulas estruturadas</li>
+                            </ul>
+                        </div>
+                        <div class="price">Precio: $3'000</div>
+                    </div>
+                </div>
+    
+                <!-- Course Box 3 -->
+                <div class="col-lg-3">
+                    <div class="course-box" data-category="marketing" data-type="hybrid" data-support="auto-aprendizagem">
+                        <img src="/Images/udemy.png" alt="Udemy">
+                        <div class="course-content">
+                            <h4>Course Title 3</h4>
+                            <p>Course description goes here for course 2...</p>
+                            <ul>
+                                <li>Marketing</li>
+                                <li>Hybrid</li>
+                                <li>Auto-aprendizagem</li>
+                            </ul>
+                        </div>
+                        <div class="price">Precio: $Y</div>
+                    </div>
+                </div>
+
+                <!-- Add more course boxes here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <!-- ... -->
+
+    <script>
+        $(document).ready(function () {
+        $('#category, #type, #support').multiselect({
+            includeSelectAllOption: true,
+            selectAllValue: 'all',
+            selectAllText: 'All',
+            nonSelectedText: 'Select an Option',
+            enableFiltering: false,
+            enableCaseInsensitiveFiltering: true,
+            buttonWidth: '100%',
+            templates: {
+                button: '<button type="button" class="multiselect dropdown-toggle" data-bs-toggle="dropdown"><span class="multiselect-selected-text"></span> <span class="caret"></span></button>',
+                ul: '<ul class="multiselect-container dropdown-menu"></ul>',
+                li: '<li><a href="javascript:void(0);"><label></label></a></li>',
+                divider: '<li class="multiselect-item divider"></li>',
+                liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>'
+            },
+            buttonText: function (options, select) {
+                if (options.length === 0) {
+                    return 'Select an Option';
+                } else if (options.length > 3) {
+                    return options.length + ' selected';
+                } else {
+                    let labels = [];
+                    options.each(function () {
+                        labels.push($(this).text());
+                    });
+                    return labels.join(', ') + '';
+                }
+            }
+        });
+
+        // Add an OK button to each dropdown
+        $(".multiselect-container").append('<li class="multiselect-ok-button"><button type="button" class="btn btn-primary btn-sm">OK</button></li>');
+
+        // Implement filter functionality
+        $('.multiselect-ok-button button').on('click', function () {
+            $(this).closest('.multiselect-container').siblings('button').dropdown('toggle');
+
+            let selectedCategories = $('#category').val();
+            let selectedTypes = $('#type').val();
+            let selectedSupport = $('#support').val();
+
+            $('.course-box').each(function () {
+                let show = true;
+
+                // Check if the box has any of the selected categories
+                if (selectedCategories.length > 0 && !selectedCategories.includes('all')) {
+                    show = selectedCategories.includes($(this).data('category'));
+                }
+
+                // Check if the box has any of the selected types
+                if (selectedTypes.length > 0 && !selectedTypes.includes('all') && show) {
+                    show = selectedTypes.includes($(this).data('type'));
+                }
+
+                // Check if the box has any of the selected support levels
+                if (selectedSupport.length > 0 && !selectedSupport.includes('all') && show) {
+                    show = selectedSupport.includes($(this).data('support'));
+                }
+
+                if (show) {
+                    $(this).parent().show();
+                } else {
+                    $(this).parent().hide();
+                }
+                });
+            });
+        });
+    </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>    
