@@ -129,42 +129,40 @@
             fetchCSVData();
                 
             async function executeCode() {
-                const code = editor.getValue();
-                console.log("Code:", code);
+              const code = editor.getValue();
+              console.log("Code:", code);
 
-                const requestOptions = {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    code: code,
-                    language: "python",
-                    stdin: csvData,
-                  }),
-                };
+              const requestOptions = {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  code: code,
+                  language: "python",
+                  stdin: csvData,
+                }),
+              };
 
-                // ... rest of the function ...
-              }
+              fetch('https://stamp-v2.herokuapp.com/execute', requestOptions)
+                .then((response) => response.json())
+                .then((data) => {
+                  if (data.error) {
+                    console.error('Response:', data);
+                    outputElement.textContent = 'An error occurred while executing the code.';
+                  } else {
+                    outputElement.textContent = data.output;
+                  }
+                })
+                .catch((error) => {
+                  console.error('Error:', error);
+                });
 
-                fetch('https://stamp-v2.herokuapp.com/execute', requestOptions)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.error) {
-                            console.error('Response:', data);
-                            outputElement.textContent = 'An error occurred while executing the code.';
-                        } else {
-                            outputElement.textContent = data.output;
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-
-                    const outputElement = document.getElementById('output');
-                    document.getElementById("output-container").style.display = "block";
-                    document.getElementById("submit-answer").style.display = "block";
+              const outputElement = document.getElementById('output');
+              document.getElementById("output-container").style.display = "block";
+              document.getElementById("submit-answer").style.display = "block";
             }
+
 
             // Add click event listener to the "Run Code" button
             const runCodeButton = document.getElementById('run-code');
