@@ -118,24 +118,34 @@
               });
 
             // Function to execute the code
-              async function executeCode() {
+            let csvData = "";
+
+            async function fetchCSVData() {
+              const response = await fetch("https://raw.githubusercontent.com/JohnJoeKC/Stamp_V2/main/Datasets/Sample_set_1.csv");
+              csvData = await response.text();
+            }
+
+            // Call the function to fetch the CSV data when the page loads
+            fetchCSVData();
+                
+            async function executeCode() {
                 const code = editor.getValue();
-                console.log('Code:', code);
-                
-                // Get the CSV data from the textarea
-                const csvData = document.getElementById("csv-data").value;
-                
+                console.log("Code:", code);
+
                 const requestOptions = {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        code: code,
-                        language: 'python',
-                        input: csvData,
-                    }),
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    code: code,
+                    language: "python",
+                    stdin: csvData,
+                  }),
                 };
+
+                // ... rest of the function ...
+              }
 
                 fetch('https://stamp-v2.herokuapp.com/execute', requestOptions)
                     .then((response) => response.json())
