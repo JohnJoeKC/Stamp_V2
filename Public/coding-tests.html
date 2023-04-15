@@ -132,6 +132,8 @@
               const code = editor.getValue();
               console.log("Code:", code);
 
+              const csvData = document.getElementById("csv-data").value; // Read the CSV data from the textarea
+
               const requestOptions = {
                 method: "POST",
                 headers: {
