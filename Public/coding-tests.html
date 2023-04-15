@@ -128,74 +128,54 @@
           
             fetchCSVData();
           
-            async function loadPyodide() {
-              const pyodideUrl = "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/";
-              if (typeof pyodide === "undefined") {
-                await loadScript(`${pyodideUrl}pyodide.js`);
+            document.getElementById("run-code").addEventListener("click", async () => {
+              const code = editor.getValue();
+              const stdin = document.getElementById("csv-data").value;
+          
+              const response = await fetch('/execute', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  code,
+                  language: 'python',
+                  stdin
+                })
+              });
+
+              const result = await response.json();
+
+              if (result.error) {
+                document.getElementById("output").innerText = result.error;
+              } else {
+                document.getElementById("output").innerText = result.output;
               }
-              await window.languagePluginLoader;
-              await pyodide.loadPackage(["numpy", "pandas"]);
-            }
-          
-            async function loadScript(src) {
-              return new Promise((resolve, reject) => {
-                const script = document.createElement("script");
-                script.src = src;
-                script.onload = () => {
-                  resolve();
-                };
-                script.onerror = () => {
-                  reject(new Error(`Failed to load script: ${src}`));
-                };
-                document.head.appendChild(script);
-              });
-            }
-          
-            (async () => {
-              await loadPyodide();
-          
-              async function executeCode() {
-                const code = editor.getValue();
-                console.log("Code:", code);
-          
-                const csvData = document.getElementById("csv-data").value;
-          
-                try {
-                  const modifiedCode = code.replace(/sys\.stdin\.read\(\)/g, `\`${csvData}\``);
-                  const output = await pyodide.runPythonAsync(modifiedCode);
-                  console.log("Output:", output);
-                  document.getElementById("output").innerText = output;
-                } catch (error) {
-                  console.error("Error:", error);
-                  document.getElementById("output").innerText = error.message;
-                }
-              }
-          
-              document.getElementById("run-code").addEventListener("click", executeCode);
-          
-              document.getElementById("download-csv").addEventListener("click", () => {
-                const blob = new Blob([csvData], { type: "text/csv" });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement("a");
-                link.href = url;
-                link.download = "sample_dataset.csv";
-                link.click();
-                URL.revokeObjectURL(url);
-              });
-          
-              document.getElementById("submit-answer").addEventListener("click", () => {
-                document.getElementById("submit-answer").style.display = "none";
-                document.getElementById("explanation-container").style.display = "block";
-              });
-          
-              document.getElementById("submit-explanation").addEventListener("click", () => {
-                const explanation = document.getElementById("explanation").value;
-                console.log("Explanation:", explanation);
-                alert("Explanation submitted successfully!");
-              });
-            })();
+            });
+
+            document.getElementById("download-csv").addEventListener("click", () => {
+              const blob = new Blob([csvData], { type: "text/csv" });
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = "sample_dataset.csv";
+              link.click();
+              URL.revokeObjectURL(url);
+            });
+
+            document.getElementById("submit-answer").addEventListener("click", () => {
+              document.getElementById("submit-answer").style.display = "none";
+              document.getElementById("explanation-container").style.display = "block";
+            });
+
+            document.getElementById("submit-explanation").addEventListener("click", () => {
+              const explanation = document.getElementById("explanation").value;
+              console.log("Explanation:", explanation);
+              alert("Explanation submitted successfully!");
+            });
           </script>
-                
+
+          
     </body>
 
 </html>
