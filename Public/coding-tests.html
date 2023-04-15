@@ -129,6 +129,7 @@
             fetchCSVData();
           
             async function loadPyodide() {
+              const pyodideUrl = "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/";
               if (typeof pyodide === "undefined") {
                 await loadScript(`${pyodideUrl}pyodide.js`);
               }
@@ -151,9 +152,6 @@
             }
           
             (async () => {
-              const pyodideUrl = "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/";
-              await loadScript(`${pyodideUrl}pyodide.js`);
-          
               await loadPyodide();
           
               async function executeCode() {
@@ -196,8 +194,8 @@
                 alert("Explanation submitted successfully!");
               });
             })();
-          </script>                  
-          
+          </script>
+             
     </body>
 
 </html>
