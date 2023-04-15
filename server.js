@@ -17,12 +17,16 @@ app.use(express.json());
 
 app.post('/execute', (req, res) => {
   console.log('Received POST request');
-  const { code, language } = req.body;
+  const { code, language, stdin } = req.body; // Add 'stdin' to destructure it from the request body
+
+  console.log('stdin:', stdin); // Log the received stdin (CSV data) to the console
 
   if (language === 'python') {
     fs.writeFileSync('test.py', code);
 
-    const pythonProcess = spawn('python', ['test.py']);
+    const pythonProcess = spawn('python', ['test.py'], { stdio: ['pipe', 'pipe', 'pipe'] });
+    pythonProcess.stdin.write(stdin); // Write the received CSV data to the Python process
+    pythonProcess.stdin.end();
     let outputData = '';
     let errorData = '';
 
