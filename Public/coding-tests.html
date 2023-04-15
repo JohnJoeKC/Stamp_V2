@@ -127,49 +127,56 @@
 
             // Call the function to fetch the CSV data when the page loads
             fetchCSVData();
-                
-            async function executeCode() {
-              const code = editor.getValue();
-              console.log("Code:", code);
+            
+            const pyodideUrl = "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/";
+              await loadScript(`${pyodideUrl}pyodide.js`);
 
-              const csvData = document.getElementById("csv-data").value; // Read the CSV data from the textarea
+              async function loadPyodide() {
+                if (typeof pyodide === "undefined") {
+                  await loadScript(`${pyodideUrl}pyodide.js`);
+                }
+                await window.languagePluginLoader;
+                await pyodide.loadPackage(["numpy", "pandas"]);
+              }
 
-              const requestOptions = {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  code: code,
-                  language: "python",
-                  stdin: csvData,
-                }),
-              };
-
-              fetch('https://stamp-v2.herokuapp.com/execute', requestOptions)
-                .then((response) => {
-                  if (!response.ok) {
-                    throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
-                  }
-                  return response.json();
-                })
-                .then((data) => {
-                  if (data.error) {
-                    console.error('Response:', data);
-                    outputElement.textContent = 'An error occurred while executing the code.';
-                  } else {
-                    outputElement.textContent = data.output;
-                  }
-                })
-                .catch((error) => {
-                  console.error('Error:', error);
+              async function loadScript(src) {
+                return new Promise((resolve, reject) => {
+                  const script = document.createElement("script");
+                  script.src = src;
+                  script.onload = () => {
+                    resolve();
+                  };
+                  script.onerror = () => {
+                    reject(new Error(`Failed to load script: ${src}`));
+                  };
+                  document.head.appendChild(script);
                 });
+              }
 
+              await loadPyodide();
 
-              const outputElement = document.getElementById('output');
-              document.getElementById("output-container").style.display = "block";
-              document.getElementById("submit-answer").style.display = "block";
-            }
+              async function executeCode() {
+                const code = editor.getValue();
+                console.log("Code:", code);
+
+                const csvData = document.getElementById("csv-data").value; // Read the CSV data from the textarea
+
+                try {
+                  // Replace 'sys.stdin.read()' in the code with the CSV data from the textarea
+                  const safeCode = code.replace("sys.stdin.read()", JSON.stringify(csvData));
+                  // Use the 'pyodide' library to run Python code in the browser
+                  const output = await pyodide.runPythonAsync(safeCode);
+                  console.log("Output:", output);
+                  outputElement.textContent = output;
+                } catch (error) {
+                  console.error("Error:", error);
+                  outputElement.textContent = "An error occurred while executing the code.";
+                }
+
+                const outputElement = document.getElementById("output");
+                document.getElementById("output-container").style.display = "block";
+                document.getElementById("submit-answer").style.display = "block";
+              }
 
 
             // Add click event listener to the "Run Code" button
