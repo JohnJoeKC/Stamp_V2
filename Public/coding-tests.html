@@ -147,7 +147,12 @@
               };
 
               fetch('https://stamp-v2.herokuapp.com/execute', requestOptions)
-                .then((response) => response.json())
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
+                  }
+                  return response.json();
+                })
                 .then((data) => {
                   if (data.error) {
                     console.error('Response:', data);
@@ -159,6 +164,7 @@
                 .catch((error) => {
                   console.error('Error:', error);
                 });
+
 
               const outputElement = document.getElementById('output');
               document.getElementById("output-container").style.display = "block";
