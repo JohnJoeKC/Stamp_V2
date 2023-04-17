@@ -91,7 +91,11 @@
             </div>
             <div class="right-column">
               <h4 class="section-title">Code here</h4>
-              <div id="monaco-editor-container" style="padding: 10px; height: 400px; overflow: hidden;"></div>
+              <select id="language-select" class="form-select mb-3">
+                <option value="python" selected>Python</option>
+                <option value="html">HTML</option>
+                <option value="javascript">JavaScript</option>
+              </select><div id="monaco-editor-container" style="padding: 10px; height: 400px; overflow: hidden;"></div>
               <button id="run-code" class="btn btn-primary mt-3">Run Code</button>
           </div>
         </section>
