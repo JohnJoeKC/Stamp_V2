@@ -138,14 +138,12 @@
               if (language === "javascript") {
                 try {
                   const output = eval(code);
-                  const iframe = document.createElement("iframe");
-                  iframe.srcdoc = output;
-                  document.getElementById("output-container").innerHTML = "";
-                  document.getElementById("output-container").appendChild(iframe);
+                  document.getElementById("output").innerText = output;
                 } catch (error) {
                   document.getElementById("output").innerText = error;
                 }
-              } else {
+              }
+              else {
                 const response = await fetch('/execute', {
                   method: 'POST',
                   headers: {
