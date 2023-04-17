@@ -132,16 +132,17 @@
           
             document.getElementById("run-code").addEventListener("click", async () => {
               const code = editor.getValue();
-              const language = document.getElementById("language-select").value;
               const stdin = document.getElementById("csv-data").value;
+              const language = document.getElementById("language-select").value;
 
-              if (language === "html") {
-                const iframe = document.getElementById("output");
-                iframe.contentWindow.document.open();
-                iframe.contentWindow.document.write(code);
-                iframe.contentWindow.document.close();
+              if (language === "javascript") {
+                try {
+                  const output = eval(code);
+                  document.getElementById("output").innerText = output;
+                } catch (error) {
+                  document.getElementById("output").innerText = error;
+                }
               } else {
-                // Execute the code as you did before for Python and other text-based outputs
                 const response = await fetch('/execute', {
                   method: 'POST',
                   headers: {
@@ -149,7 +150,7 @@
                   },
                   body: JSON.stringify({
                     code,
-                    language: 'python', // You can replace this with the language variable to support multiple text-based languages
+                    language: 'python',
                     stdin
                   })
                 });
@@ -157,9 +158,9 @@
                 const result = await response.json();
 
                 if (result.error) {
-                  document.getElementById("output").contentWindow.document.body.innerText = result.error;
+                  document.getElementById("output").innerText = result.error;
                 } else {
-                  document.getElementById("output").contentWindow.document.body.innerText = result.output;
+                  document.getElementById("output").innerText = result.output;
                 }
               }
             });
