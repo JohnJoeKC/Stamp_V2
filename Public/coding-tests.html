@@ -138,7 +138,10 @@
               if (language === "javascript") {
                 try {
                   const output = eval(code);
-                  document.getElementById("output").innerText = output;
+                  const iframe = document.createElement("iframe");
+                  iframe.srcdoc = output;
+                  document.getElementById("output-container").innerHTML = "";
+                  document.getElementById("output-container").appendChild(iframe);
                 } catch (error) {
                   document.getElementById("output").innerText = error;
                 }
