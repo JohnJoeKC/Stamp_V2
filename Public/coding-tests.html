@@ -71,7 +71,7 @@
         <!-- Introduction -->
         <section class="container main-content">
           <div class="left-column">
-              <h2 class="section-title">Coding Test</h2>
+              <h2 class="section-title">Test Instructions</h2>
               <p>Please read the below task and use the IDE to code the solution. You have 30 minutes to complete the task.</p>
               <p>Using Python, write code to calculate the factorial of a number, and produce a sentence "the factorial of X is Y. In this instance X=5.".</p>
               <button id="download-csv" class="btn btn-primary">Access CSV Dataset</button>
@@ -91,7 +91,7 @@
               </div>
           </div>
           <div class="right-column">
-              <h4 class="section-title">Code here</h4>
+              <h2 class="section-title">Code here</h2>
               <select id="language-select" class="form-select mb-3">
                   <option value="python" selected>Python</option>
                   <option value="html">HTML</option>
@@ -175,7 +175,7 @@
                 }
               }
             });
-            
+
             document.getElementById("download-csv").addEventListener("click", () => {
               const blob = new Blob([csvData], { type: "text/csv" });
               const url = URL.createObjectURL(blob);

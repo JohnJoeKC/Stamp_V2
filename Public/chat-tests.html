@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Service Test - Stamp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .main-content .left-column {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .main-content .right-column {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .main-content .right-column .section-title {
+            text-align: center;
+        }
+
+        .message {
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin: 4px 0;
+            max-width: 80%;
+            display: inline-block;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            background-color: lightgrey;
+            text-align: right;
+        }
+
+        .message.customer {
+            background-color: lightblue;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">Stamp</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="features.html">Features & Benefits</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="testimonials.html">Testimonials & Success Stories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="pricing.html">Pricing & Packages</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="demo.html">Try Our Tests (Demo)</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container main-content">
+            <div class="left-column">
+                <h3 class="section-title">Teste de atendimento ao cliente</h3>
+                <p>Interaja com o cliente através da interface de chat à direita.</p>
+                <h5>Cliente Detalhes</h5>
+                <p><b>Nome:</b> Perdo Oliveira</p>
+                <p><b>Cliente desed:</b> April 2021</p>
+                <p><b>Plano actual:</b> Custo: $30 por mês. Oro. MBs: 100. Minutos: 1000</p>
+                <b>Outo planos disponíveis: </b>
+                <p><u>Prata</u>: $20 por mês; 80 MBs; 500 Minutos. +$2 cada 10 MBs; +$2 cada 100 Minutos</p>
+            </div>
+            <div class="right-column">
+                <h3 class="section-title">Interface de bate-papo</h3>
+                <div id="chat-container" style="border: 1px solid black; padding: 10px; height: 400px; overflow-y: scroll;">
+                    <!-- Chat messages will be displayed here -->
+                </div>
+                <div id="response-options" style="display: none;">
+                    <button class="btn btn-outline-primary option-btn">Ok, I can do that for you now</button>
+                    <button class="btn btn-outline-primary option-btn">I'm sorry I cannot help you with this</button>
+                    <button class="btn btn-outline-primary option-btn">Sure, could you help me understand why</button>
+                </div>
+                <button id="start-test" class="btn btn-primary mt-3">Iniciar Teste</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const chatContainer = document.getElementById("chat-container");
+        const responseOptions = document.getElementById("response-options");
+        const optionButtons = document.querySelectorAll(".option-btn");
+        const startTestButton = document.getElementById("start-test");
+    
+        const conversationTree = {
+            message: "Olá, gostaria de fechar minha conta",
+            options: [
+                {
+                    text: "Ok, posso fazer isso para você agora",
+                    response: "Obrigado",
+                    nextNode: {
+                        message: "Customer's message for path 1",
+                        options: [
+                            { text: "Path 1, option 1" },
+                            { text: "Path 1, option 2" },
+                            { text: "Path 1, option 3" },
+                        ],
+                    },
+                },
+                {
+                    text: "Me desculpe, eu não posso te ajudar com isso",
+                    response: "Vou cancelar meu débito direto",
+                    nextNode: {
+                        message: "Customer's message for path 2",
+                        options: [
+                            { text: "Path 2, option 1" },
+                            { text: "Path 2, option 2" },
+                            { text: "Path 2, option 3" },
+                        ],
+                    },
+                },
+                {
+                    text: "Claro, você poderia me ajudar a entender por que",
+                    response: "Encontrei uma oferta melhor em outro lugar",
+                    nextNode: {
+                        message: "Customer's message for path 3",
+                        options: [
+                            { text: "Lamento saber, vou cancelar sua conta agora" },
+                            { text: "Qual foi o custo e quantos mb e minutos vem com ele?" },
+                            { text: "Como esta oferta é melhor?" },
+                        ],
+                    },
+                },
+            ],
+        };
+    
+        conversationTree.options[2].nextNode.options[1] = {
+            text: "Qual foi o custo e quantos mb e minutos vem com ele?",
+            response: "O custo é de $25 por mês, com 100 MBs e 700 minutos.",
+            nextNode: {
+                message: "Customer's message for path 3.2",
+                options: [
+                    {
+                        text: "Posso oferecer um novo plano adequado para você",
+                        response: "Isso soa interessante, por favor me diga mais",
+                        nextNode: {
+                            message: "Customer's message for path 3.2.1",
+                            options: [
+                                { text: "$20 por mês; 80 MBs; 500 Minutos" },
+                                { text: "$22 por mês; 90 MBs; 600 Minutos" },
+                                { text: "$24 por mês; 100 MBs; 500 Minutos" },
+                                { text: "$24 por mês; 80 MBs; 700 Minutos" },
+                            ],
+                        },
+                    },
+                    {
+                        text: "Entendi, mas infelizmente não podemos igualar essa oferta",
+                        response: "Tudo bem, por favor cancele minha conta",
+                        nextNode: {
+                            message: "Customer's message for path 3.2.2",
+                            options: [
+                                { text: "Tem algo mais em que eu possa ajudar?" },
+                            ],
+                        },
+                    },
+                    {
+                        text: "Quantos MBs e minutos você precisa e qual é o seu orçamento?",
+                        response: "Não posso gastar mais de $26 por mês. Eu preciso de pelo menos 100 MBs mas na verdade não uso muito minutos, tal vez 300",
+                        nextNode: {
+                            message: "Customer's message for path 3.2.2",
+                            options: [
+                                { text: "Entendi, mas infelizmente não podemos igualar essa oferta" },
+                                { text: "Eu tenho um plano perfeito para você: $22 por mês, 100 MBs, 500 minutos" },
+                                { text: "Eu tenho um plano perfeito para você: $26 por mês, 110 MBs, 500 minutos" },
+                                { text: "Eu tenho um plano perfeito para você: $24 por mês, 100 MBs, 500 minutos" },
+                            ],
+                        },
+                    },
+                ],
+            },
+        };
+
+        conversationTree.options[2].nextNode.options[2] = {
+            text: "Como esta oferta é melhor?",
+            response: "A oferta tem um preço mais baixo e fornece mais recursos.",
+            nextNode: {
+                message: "Customer's message for path 3.3",
+                options: [
+                    {
+                        text: "Entendi, que tal oferecermos um desconto em seu plano atual?",
+                        response: "Vou pensar sobre isso e voltar para você",
+                        nextNode: {
+                            // Further options and responses
+                        },
+                    },
+                    {
+                        text: "Obrigado por compartilhar, posso ajudá-lo com algo mais?",
+                        response: "Não, é só isso, obrigado",
+                        nextNode: {
+                            // Further options and responses
+                        },
+                    },
+                ],
+            },
+        };
+        function appendMessage(message, sender = "user") {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("message", sender);
+            messageElement.textContent = message;
+
+            const messageContainer = document.createElement("div");
+            messageContainer.classList.add(sender === "user" ? "text-end" : "text-start");
+            messageContainer.appendChild(messageElement);
+            chatContainer.appendChild(messageContainer);
+        }
+    
+        function handleOptionClick(optionIndex, currentNode) {
+            const selectedOption = currentNode.options[optionIndex];
+    
+            appendMessage(selectedOption.text, "user");
+            appendMessage(selectedOption.response, "customer");
+    
+            if (selectedOption.nextNode) {
+                displayOptions(selectedOption.nextNode);
+            } else {
+                // No more options, end of conversation
+                responseOptions.style.display = "none";
+            }
+        }
+    
+        function displayOptions(node) {
+            responseOptions.innerHTML = "";
+            node.options.forEach((option, index) => {
+                const button = document.createElement("button");
+                button.classList.add("btn", "btn-outline-primary", "option-btn");
+                button.textContent = option.text;
+                button.addEventListener("click", () => handleOptionClick(index, node));
+                responseOptions.appendChild(button);
+            });
+        }
+    
+        startTestButton.addEventListener("click", () => {
+            startTestButton.style.display = "none";
+            responseOptions.style.display = "block";
+            appendMessage(conversationTree.message, "customer");
+            displayOptions(conversationTree);
+        });
+    </script>
+    
+    
+</body>
+
+</html>
+
+
+
+
+
+        
