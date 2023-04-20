@@ -61,20 +61,18 @@ app.post('/openai', async (req, res) => {
 
   try {
     const response = await axios.post(
-      'https://api.openai.com/v1/engines/davinci-codex/completions',
+      'https://api.openai.com/v1/chat/completions',
       {
-        prompt: prompt,
-        max_tokens: 50,
-        n: 1,
-        stop: null,
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: prompt }],
         temperature: 0.5,
+        max_tokens: 50,
       },
       {
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${openaiApiKey}`,
-        }
-        ,
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${openaiApiKey}`,
+        },
       }
     );
 
