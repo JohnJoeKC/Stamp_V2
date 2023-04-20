@@ -5,6 +5,7 @@ const cors = require('cors');
 const fs = require('fs');
 const { spawn } = require('child_process');
 const axios = require('axios');
+const openaiApiKey = process.env.OPENAI_API_KEY;
 const corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200
@@ -71,7 +72,7 @@ app.post('/openai', async (req, res) => {
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer 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`,
+          Authorization: `Bearer ${openaiApiKey}`,
         },
       }
     );
