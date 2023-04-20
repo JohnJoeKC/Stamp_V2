@@ -31,6 +31,9 @@
           text-align: center;
       }
   </style>
+
+  <script src="https://sdk.openai.com/openai.min.js"></script>
+
 </head>
 
 <body>
@@ -101,10 +104,21 @@
               <button id="run-code" class="btn btn-primary mt-3">Run Code</button>
           </div>
       </section>      
+          <section class="container mt-5">
+            <h2 class="section-title">OpenAI API Interaction</h2>
+            <div class="border p-3">
+              <label for="prompt" class="form-label">Prompt:</label>
+              <textarea id="prompt" class="form-control mb-3">Your pre-populated prompt text goes here</textarea>
+              <button id="generate-text" class="btn btn-primary mb-3">Generate Text</button>
+              <label for="generated-text" class="form-label">Generated Text:</label>
+              <textarea id="generated-text" class="form-control" readonly></textarea>
+            </div>
+          </section>
       </main>
-          <script src="js/bootstrap.bundle.min.js"></script>
-      
-          <script>
+
+      <script src="js/bootstrap.bundle.min.js"></script>
+
+      <script>
             require.config({
               paths: {
                 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.1/min/vs'
@@ -206,7 +220,41 @@
               monaco.editor.setModelLanguage(editor.getModel(), language);
             });          
           </script>
-          
-    </body>
 
-</html>
+          <script>
+              document.getElementById("generate-text").addEventListener("click", async () => {
+            const promptText = document.getElementById("prompt").value;
+
+            if (promptText.trim() === "") {
+                alert("Please enter a prompt.");
+                return;
+            }
+
+            // Add AI context
+            const aiContext = "You are a helpful assistant. ";
+            const fullPrompt = aiContext + promptText;
+
+            try {
+                const response = await fetch('/openai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt: fullPrompt }) // Use fullPrompt instead of prompt
+                });
+
+                const result = await response.json();
+
+                if (result.error) {
+                    alert("Error: " + result.error);
+                } else {
+                    document.getElementById("generated-text").value = result.text;
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+          </script>
+          </body>
+
+          </html>

@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const fs = require('fs');
 const { spawn } = require('child_process');
+const axios = require('axios');
 const corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200
@@ -54,6 +55,35 @@ app.post('/execute', (req, res) => {
   }
 });
 
+app.post('/openai', async (req, res) => {
+  const prompt = req.body.prompt;
+
+  try {
+    const response = await axios.post(
+      'https://api.openai.com/v1/engines/davinci-codex/completions',
+      {
+        prompt: prompt,
+        max_tokens: 50,
+        n: 1,
+        stop: null,
+        temperature: 0.5,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer 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`,
+        },
+      }
+    );
+
+    const generatedText = response.data.choices[0].text.trim();
+    res.json({ text: generatedText });
+  } catch (error) {
+    console.error('Error calling OpenAI API: ', error.message);
+    res.status(500).json({ error: 'Error calling OpenAI API' });
+  }
+});
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'Public', 'index.html'));
 });
@@ -68,3 +98,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
