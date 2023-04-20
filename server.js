@@ -82,7 +82,7 @@ app.post('/openai', async (req, res) => {
     res.json({ text: generatedText });
   } catch (error) {
     console.error('Error calling OpenAI API: ', error.message, error.response.data);
-    res.status(500).json({ error: 'Error calling OpenAI API', details: error.response.data });
+    res.status(500).json({ error: 'Error calling OpenAI API', details: error.response?.data });
   }
 });
 
