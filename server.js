@@ -71,17 +71,18 @@ app.post('/openai', async (req, res) => {
       },
       {
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${openaiApiKey}`,
-        },
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${openaiApiKey}`,
+        }
+        ,
       }
     );
 
     const generatedText = response.data.choices[0].text.trim();
     res.json({ text: generatedText });
   } catch (error) {
-    console.error('Error calling OpenAI API: ', error.message);
-    res.status(500).json({ error: 'Error calling OpenAI API' });
+    console.error('Error calling OpenAI API: ', error.message, error.response.data);
+    res.status(500).json({ error: 'Error calling OpenAI API', details: error.response.data });
   }
 });
 
